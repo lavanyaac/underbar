@@ -402,10 +402,10 @@
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
     var result = [];
-    if(typeof functionOrKey === 'string'){
-        functionOrKey = String('')[functionOrKey];
-    } 
     for(var i of collection){ 
+      if(typeof functionOrKey === 'string'){
+        functionOrKey = i[functionOrKey];
+      } 
       result.push(functionOrKey.apply(i, args));
     }
     return result;
@@ -415,7 +415,20 @@
   // If iterator is a string, sort objects by that property with the name
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
-  _.sortBy = function(collection, iterator) {
+  _.sortBy = function(collection, iterator){
+    return collection.sort(function(item1, item2){
+      var item1, item2;
+      if(typeof iterator === 'function'){
+        item1 = iterator(item1)
+        item2 = iterator(item2)
+      }else{
+        item1 = item1[iterator];
+        item2 = item2[iterator];
+      }
+      item1 = (item1 === undefined) ? '' : item1;
+      item2 = (item2 === undefined) ? '' : item2;
+      return item1 - item2 ;
+    });
   };
 
   // Zip together two or more arrays with elements of the same index
