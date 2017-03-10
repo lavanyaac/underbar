@@ -370,6 +370,23 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    function getNRandomNums(n){
+      var randList = [];
+      while(randList.length < n){
+        var rand = Math.floor(Math.random() * n);
+        if(randList.includes(rand)){
+          continue;
+        }
+        randList.push(rand);
+      }
+      return randList;
+    }
+    var indexList = getNRandomNums(array.length);
+    var shuffled =[];
+    for(var i of indexList){
+      shuffled.push(array[i]);
+    }
+    return shuffled;
   };
 
 
