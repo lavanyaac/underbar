@@ -456,17 +456,47 @@
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function(nestedArray, result) {
+  _.flatten = function(nestedArray) {
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var result = []
+    var firstArray = arguments[0]
+    for(var elem of firstArray){
+      var elemFound = true;
+      for(var argIndex = 0; argIndex < arguments.length; argIndex++){
+        if(!arguments[argIndex].includes(elem)){
+          elemFound = false;
+          break;
+        }
+      }
+      if(elemFound){
+        result.push(elem)
+      }
+    }
+    return result;
   };
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    var result = []
+    var firstArray = arguments[0]
+    for(var elem of firstArray){
+      var elemFound = false;
+      for(var argIndex = 1; argIndex < arguments.length; argIndex++){
+        if(arguments[argIndex].includes(elem)){
+          elemFound = true;
+          break;
+        }
+      }
+      if(!elemFound){
+        result.push(elem)
+      }
+    }
+    return result;
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
