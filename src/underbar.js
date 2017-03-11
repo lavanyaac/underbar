@@ -456,7 +456,18 @@
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function(nestedArray) {
+  _.flatten = function(nestedArray, result) {
+    if(result === undefined){
+      result =[];
+    }
+    if(!Array.isArray(nestedArray)){
+      return result.push(nestedArray);
+    }else{
+      for(var i of nestedArray){
+        _.flatten(i, result)
+      }
+    }
+    return result;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
@@ -505,5 +516,10 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+
+    return function(){
+              var args = Array.prototype.slice.call(arguments, 2);
+              setInterval(function(){return func.apply(null,args)}, wait);
+            }
   };
 }());
