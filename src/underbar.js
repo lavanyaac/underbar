@@ -516,10 +516,15 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
-
+    var result=false;
     return function(){
-              var args = Array.prototype.slice.call(arguments, 2);
-              setInterval(function(){return func.apply(null,args)}, wait);
-            }
+      if(!result){
+        var args = Array.prototype.slice.call(arguments, 2);
+        func.apply(this, args);
+        result = true;
+        setTimeout(function(){result = false;}, wait);
+      }
+      return result;
+    }
   };
 }());
